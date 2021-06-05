@@ -1,8 +1,8 @@
 const socket = window.io();
-
 const formSendMessage = document.querySelector('.form-send-message');
 const inputMessage = document.querySelector('.input-message');
 const saveNickname = document.querySelector('.save-nickname');
+const onlineUsers = document.querySelector('.users');
 
 let nickname = '';
 
@@ -21,14 +21,30 @@ saveNickname.addEventListener('click', (e) => {
   const nicknameInput = document.querySelector('.nickname');
   e.preventDefault();
   nickname = nicknameInput.value;
-  console.log(nickname);
+  socket.emit('setNickname', { nickname, id: socket.id.slice(0, 16) });
 });
 
 const createMessage = (chatMessage) => {
   const chatMessages = document.querySelector('.chat');
   const li = document.createElement('li');
+  li.setAttribute('data-testid', 'message');
   li.innerText = chatMessage;
   chatMessages.appendChild(li);
 };
 
+const addUsers = (users = []) => {
+  onlineUsers.innerHTML = '';
+  users.forEach((user) => {
+    const li = document.createElement('li');
+    li.innerText = user;
+    li.setAttribute('data-testid', 'online-user');
+    onlineUsers.appendChild(li); 
+  });
+};
+
 socket.on('message', (message) => createMessage(message));
+socket.on('onlineUser', (users) => addUsers(users));
+
+window.onload = () => {
+  socket.emit('onlineUser');
+};

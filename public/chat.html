@@ -11,13 +11,18 @@
         autocomplete="off" 
         class="nickname"
         placeholder="nickname"
+        data-testid="nickname-box"
       >
-      <button type="submit" class="save-nickname" >Salvar</button>
+      <button
+        type="submit"
+        class="save-nickname" 
+        data-testid="nickname-button"
+      >
+        Salvar
+      </button>
     </div>
 
-    <div class="users" >
-      usuarios
-    </div>
+    <ul class="users" ></ul>
     
     <ul class="chat"></ul>
 
@@ -31,8 +36,15 @@
             autocomplete="off" 
             class="input-message"
             placeholder="message"
+            data-testid="message-box"
         >
-          <button type="submit" class="send-message" >Enviar</button>
+          <button
+            type="submit" 
+            class="send-message"
+            data-testid="send-button"
+          >
+            Enviar
+          </button>
         </div>
       </form>
     </div>

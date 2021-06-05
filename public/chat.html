@@ -4,8 +4,15 @@
     <title>Socket.IO - trybe</title>
   </head>
   <body>
-    <div class="nickname">
-      nickname
+    <div class="nickname-container">
+      <input 
+        type="text" 
+        name="nickname" 
+        autocomplete="off" 
+        class="nickname"
+        placeholder="nickname"
+      >
+      <button type="submit" class="save-nickname" >Salvar</button>
     </div>
 
     <div class="users" >
@@ -16,8 +23,17 @@
 
     <div>
       <form action="" class="form-send-message">
-        <input type="text" name="input-message" autocomplete="off" class="input-message">
-        <button type="submit" class="send-message" >Enviar</button>
+
+        <div>
+          <input 
+            type="text" 
+            name="input-message" 
+            autocomplete="off" 
+            class="input-message"
+            placeholder="message"
+        >
+          <button type="submit" class="send-message" >Enviar</button>
+        </div>
       </form>
     </div>
 

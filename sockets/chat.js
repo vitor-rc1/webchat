@@ -1,8 +1,18 @@
+const newDate = () => {
+  const dateNow = new Date();
+
+  return `${dateNow.getDate()}-${dateNow.getMonth() + 1}-${dateNow.getFullYear()}`
+  + ` ${dateNow.getHours()}:${dateNow.getMinutes()}`;
+};
+
 module.exports = (io) => io.on('connection', (socket) => {
   console.log(`Usuário conectado. ID: ${socket.id} `);
-
-  socket.on('clientMessage', (chatMessage) => {
+  
+  socket.on('message', ({ chatMessage, nickname }) => {
     console.log(`Mensagem ${chatMessage}`);
-    io.emit('message', { chatMessage, nickName: socket.id });
+
+    const dateMessage = newDate();
+    const message = `${dateMessage} - ${nickname}: ${chatMessage}`;
+    io.emit('message', message);
   });
 });

@@ -36,7 +36,8 @@ const addUsers = (users = []) => {
   onlineUsers.innerHTML = '';
   users.forEach((user) => {
     const li = document.createElement('li');
-    li.innerText = user;
+    const id = Object.keys(user)[0];
+    li.innerText = user[id];
     li.setAttribute('data-testid', 'online-user');
     onlineUsers.appendChild(li); 
   });
@@ -47,4 +48,8 @@ socket.on('onlineUser', (users) => addUsers(users));
 
 window.onload = () => {
   socket.emit('onlineUser');
+};
+
+window.onbeforeunload = () => {
+  socket.disconnect();
 };

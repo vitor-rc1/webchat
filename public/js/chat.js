@@ -10,7 +10,7 @@ formSendMessage.addEventListener('submit', (e) => {
   e.preventDefault();
   const data = {
     chatMessage: inputMessage.value,
-    nickname,
+    nickname: nickname || socket.id.slice(0, 16),
   };
   socket.emit('message', data);
   inputMessage.value = '';
@@ -45,11 +45,17 @@ const addUsers = (users) => {
   });
 };
 
+const loadMessages = (messages = []) => {
+  messages.forEach((message) => createMessage(message));
+};
+
 socket.on('message', (message) => createMessage(message));
 socket.on('onlineUser', (users) => addUsers(users));
+socket.on('loadMessages', (messages) => loadMessages(messages));
 
 window.onload = () => {
   socket.emit('onlineUser');
+  socket.emit('loadMessages');
 };
 
 window.onbeforeunload = () => {

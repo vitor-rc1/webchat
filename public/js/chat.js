@@ -32,12 +32,14 @@ const createMessage = (chatMessage) => {
   chatMessages.appendChild(li);
 };
 
-const addUsers = (users = []) => {
+const addUsers = (users) => {
   onlineUsers.innerHTML = '';
-  users.forEach((user) => {
+  const socketUser = users.find((user) => user.id === socket.id.slice(0, 16));
+  const usersWithoutSocketUser = users.filter((user) => user.id !== socket.id.slice(0, 16));
+  console.log(socketUser);
+  [socketUser, ...usersWithoutSocketUser].forEach((user) => {
     const li = document.createElement('li');
-    const id = Object.keys(user)[0];
-    li.innerText = user[id];
+    li.innerText = user.nickname || user.id;
     li.setAttribute('data-testid', 'online-user');
     onlineUsers.appendChild(li); 
   });

@@ -8,11 +8,7 @@ const newDate = () => {
 const users = [];
 
 const disconnect = (socket, io) => {
-  const index = users.findIndex(((user) => {
-    console.log(Object.keys(user)[0]);
-    return Object.keys(user)[0] === socket.id.slice(0, 16);
-  }));
-  console.log(index);
+  const index = users.findIndex(((user) => user.id === socket.id.slice(0, 16)));
   users.splice(index, 1);
   io.emit('onlineUser', users);
 };
@@ -24,14 +20,14 @@ const createMessage = (chatMessage, nickname, socket, io) => {
 };
 
 const setNickname = (nickname, id, io) => {
-  const index = users.findIndex((user) => user[id] === id);
-    users[index][id] = nickname;
+  const index = users.findIndex((user) => user.id === id);
+    users[index].nickname = nickname;
     io.emit('onlineUser', users);
 };
 
 const onlineUser = (socket, io) => {
   const id = socket.id.slice(0, 16);
-  users.push({ [id]: id });
+  users.push({ id, nickname: '' });
   io.emit('onlineUser', users);
 };
 

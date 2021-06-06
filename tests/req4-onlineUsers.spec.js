@@ -426,11 +426,11 @@ describe('4 - Informe a todos os clientes quem está online no momento', () => {
     expect(client2Nicknames.length).toBe(2);
     expect(client2Nicknames[0]).toMatch(/^[\w'-]{16}$/);
     expect(client2Nicknames[1]).toEqual(nickname);
-
+    
     // the first client sees the sencond client name
     await page.bringToFront();
     await page.waitForTimeout(500);
-
+    
     client1Nicknames = await page.$$eval(dataTestid('online-user'), (nodes) => nodes.map((n) => n.innerText));
     expect(client1Nicknames.length).toBe(2);
     expect(client1Nicknames[0]).toEqual(nickname);
